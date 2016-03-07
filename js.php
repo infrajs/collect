@@ -4,6 +4,7 @@ use infrajs\access\Access;
 use infrajs\load\Load;
 use infrajs\config\Config;
 use infrajs\mem\Mem;
+use infrajs\nostore\Nostore;
 use MatthiasMullie\Minify;
 
 if (!is_file('vendor/autoload.php')) {
@@ -12,6 +13,7 @@ if (!is_file('vendor/autoload.php')) {
 	Config::init();
 }
 
+Nostore::pubStat(); //Кэшируется, если public разрешён, как статика, надолго
 
 header('Infrajs-Cache: true');
 $re = isset($_GET['re']); //Modified re нужно обновлять с ctrl+F5
