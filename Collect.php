@@ -26,6 +26,7 @@ class Collect {
 			});
 		}
 		if (empty($c['js'])) return;
+		if (!empty($conf[$name]['off'])) return;
 		if (Collect::$collected[$name]) return;
 		Collect::$collected[$name] = true;
 
