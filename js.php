@@ -21,6 +21,7 @@ $debug = Access::debug();
 if ($debug || $re) {
 	$js = Collect::js();
 	$key = 'Infrajs::Config::js'.true;
+
 	Mem::delete($key);
 	$key = 'Infrajs::Config::js'.false;
 	Mem::delete($key);
@@ -46,7 +47,7 @@ if (!$js) {
 	} else {
 		$min = new Minify\JS($js);
 		$js = $min->minify();
-	}	
+	}
 	Mem::set($key, $js);
 }
 if ($isgzip) {
