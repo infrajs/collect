@@ -20,13 +20,13 @@ class Collect {
 	public static function loadJS(&$js, $name)
 	{
 		$c = Config::get($name);
+		if (empty($c['js'])) return;
+		if (!empty($c['off'])) return;
 		if (!empty($c['dependencies'])) {
 			Each::exec($c['dependencies'], function($name) use(&$js){
 				Collect::loadJS($js, $name);
 			});
 		}
-		if (empty($c['js'])) return;
-		if (!empty($conf[$name]['off'])) return;
 		if (Collect::$collected[$name]) return;
 		Collect::$collected[$name] = true;
 
