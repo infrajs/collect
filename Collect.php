@@ -9,7 +9,7 @@ class Collect {
 	public static function js()
 	{
 		header('Infrajs-Cache: false');
-		$js = 'window.infra={}; window.infrajs={ }; infra.conf=('.Load::json_encode(Config::pub()).'); infra.config=function(){ return infra.conf; };';
+		$js = 'window.infra={}; window.infrajs={ }; infra.conf=('.Load::json_encode(Config::pub()).'); infra.config=function(name){ if(!name)return infra.conf; return infra.conf[name] };';
 		$conf = Config::get();
 		foreach($conf as $name=>$c){
 			Collect::loadJS($js, $name);	
