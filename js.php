@@ -2,16 +2,9 @@
 namespace infrajs\collect;
 use infrajs\access\Access;
 use infrajs\load\Load;
-use infrajs\config\Config;
 use infrajs\mem\Mem;
 use infrajs\nostore\Nostore;
 use MatthiasMullie\Minify;
-
-if (!is_file('vendor/autoload.php')) {
-	chdir('../../../');
-	require_once('vendor/autoload.php');
-	Config::init();
-}
 
 Nostore::pubStat(); //Кэшируется, если public разрешён, как статика, надолго
 
