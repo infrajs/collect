@@ -8,6 +8,7 @@
 	},
 	"require":{
 		"matthiasmullie/minify":"~1",
+		"infrajs/router":"~1",
 		"infrajs/once":"~1",
 		"infrajs/path":"~1",
 		"infrajs/load":"~1",
