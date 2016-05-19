@@ -2,12 +2,12 @@
 **Disclaimer:** Module is not complete and not ready for use yet.
 Расширение для [infrajs/config](https://github.com/infrajs/config)
 
-Обрабатывается свойство ```js``` в конфиге. Сборку скриптов доступна по адресу ```-collect/js.php```
+Обрабатывается свойство ```js``` в конфиге. Сборка скриптов доступна по адресу ```/vendor/infrajs/collect/js.php```
 
-# Использование
+## Использование
 ```html
 <head>
-	<script async defer src="/-config/js.php"></script>
+	<script async defer src="/vendor/infrajs/collect/js.php"></script>
 </head>
 <body>
 	...
@@ -18,4 +18,11 @@
 	</script>
 	...
 </body>
+```
+## Загрузка javascript определённых расширений
+```html
+	<script async defer src="/vendor/infrajs/collect/js.php?name=collect"></script>
+```
+```html
+	<script async defer src="/vendor/infrajs/collect/js.php?name=event,tester"></script>
 ```

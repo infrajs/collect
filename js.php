@@ -3,16 +3,25 @@ namespace infrajs\collect;
 use infrajs\access\Access;
 use infrajs\load\Load;
 use infrajs\mem\Mem;
+use infrajs\ans\Ans;
 use infrajs\nostore\Nostore;
 use MatthiasMullie\Minify;
+use infrajs\router\Router;
+
+if (!is_file('vendor/autoload.php')) {
+	chdir('../../../');
+	require_once('vendor/autoload.php');
+	Router::init();
+}
 
 Nostore::pubStat(); //Кэшируется, если public разрешён, как статика, надолго
 
 header('Infrajs-Cache: true');
 $re = isset($_GET['re']); //Modified re нужно обновлять с ctrl+F5
 $debug = Access::debug();
+$name = Ans::GET('name','string','');
 if ($debug || $re) {
-	$js = Collect::js();
+	$js = Collect::js($name);
 	$key = 'Infrajs::Config::js'.true;
 
 	Mem::delete($key);
@@ -33,7 +42,7 @@ $key = 'Infrajs::Config::js'.$isgzip; //Два кэша зазипованый �
 $js = Mem::get($key);
 
 if (!$js) {
-	$js = Collect::js();
+	$js = Collect::js($name);
 	if ($isgzip) {
 		$min = new Minify\JS($js);
 		$js = $min->gzip();

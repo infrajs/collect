@@ -6,13 +6,22 @@ use infrajs\each\Each;
 use infrajs\path\Path;
 
 class Collect {
-	public static function js()
+	public static function js($name = false)
 	{
 		header('Infrajs-Cache: false');
-		$js = 'window.infra={}; window.infrajs={ }; infra.conf=('.Load::json_encode(Config::pub()).'); infra.config=function(name){ if(!name)return infra.conf; return infra.conf[name] };';
-		$conf = Config::get();
-		foreach($conf as $name=>$c){
-			Collect::loadJS($js, $name);	
+		if ($name) {
+			$js = '';
+			$ar = explode(',', $name);
+			for ($i = 0,$l = sizeof($ar); $i < $l; $i++) {
+				$name = $ar[$i];
+				Collect::loadJS($js, $name);
+			}
+		} else {
+			$js = 'window.infra={}; window.infrajs={ }; infra.conf=('.Load::json_encode(Config::pub()).'); infra.config=function(name){ if(!name)return infra.conf; return infra.conf[name] };';
+			$conf = Config::get();
+			foreach($conf as $name=>$c){
+				Collect::loadJS($js, $name);	
+			}
 		}
 		return $js;
 	}
