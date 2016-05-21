@@ -16,7 +16,8 @@ class Collect {
 				Collect::loadJS($js, $name);
 			}
 		} else {
-			$js = 'window.infra={}; window.infrajs={ }; infra.conf=('.Load::json_encode(Config::pub()).'); infra.config=function(name){ if(!name)return infra.conf; return infra.conf[name] };';
+			//$js = 'window.infra={}; window.infrajs={ }; infra.conf=('.Load::json_encode(Config::pub()).'); infra.config=function(name){ if(!name)return infra.conf; return infra.conf[name] };';
+			$js = '';
 			$conf = Config::get();
 			foreach($conf as $name=>$c){
 				Collect::loadJS($js, $name);	

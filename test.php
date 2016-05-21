@@ -1,12 +1,12 @@
 <?php
 namespace infrajs\collect;
-use infrajs\config\Config;
+use infrajs\router\Router;
 use infrajs\ans\Ans;
 
 if (!is_file('vendor/autoload.php')) {
 	chdir('../../../');
 	require_once('vendor/autoload.php');
-	Config::init();
+	Router::init();
 }
 
 $js = Collect::js();
