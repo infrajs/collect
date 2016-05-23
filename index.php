@@ -20,14 +20,16 @@ if(isset($_GET['js'])) $isjs = 'js';
 else if(isset($_GET['css'])) $isjs = '';
 else die('Необходимо добавить параметр css или js');
 
-header('Infrajs-Cache: true');
+if (!Load::isphp()) {
+	header('Infrajs-Cache: true');
+}
 
 $re = isset($_GET['re']); //Modified re нужно обновлять с ctrl+F5
 $debug = Access::debug();
 $name = Ans::GET('name','string','');
 
 if ($debug || $re) {
-	header('Infrajs-Cache: false');
+	if (!Load::isphp()) header('Infrajs-Cache: false');
 	
 	if ($isjs) $code = Collect::js($name);
 	else $code = Collect::css($name);
@@ -36,23 +38,25 @@ if ($debug || $re) {
 	Mem::delete($key);
 	$key = 'Infrajs::Collect::' . $isjs . false;//Кэш без zip
 	Mem::delete($key);
-
-	if ($isjs) header('Content-Type: text/javascript; charset=utf-8');
-	else header('Content-Type: text/css; charset=utf-8');
 	
-	echo $code;
-	exit;
+	if (!Load::isphp()) {
+		if ($isjs) header('Content-Type: text/javascript; charset=utf-8');
+		else header('Content-Type: text/css; charset=utf-8');
+	}
+	
+	
+	return Ans::txt($code);
 }
 
 $p = explode(',', str_replace(' ', '', $_SERVER['HTTP_ACCEPT_ENCODING']));
-$isgzip = in_array('gzip', $p);
+$isgzip = !Load::isphp()&&in_array('gzip', $p);
 
 $key = 'Infrajs::Collect::' . $isjs . $isgzip; //Два кэша зазипованый и нет. Не все браузеры понимают зазипованую версию.
 
 $code = Mem::get($key);
 
 if (!$code) {
-	header('Infrajs-Cache: false');
+	if (!Load::isphp()) header('Infrajs-Cache: false');
 
 	if ($isjs) $code = Collect::js($name);
 	else $code = Collect::css($name);
@@ -67,14 +71,14 @@ if (!$code) {
 	}
 	Mem::set($key, $code);
 }
+if (!Load::isphp()) {
+	if ($isgzip) {
+		header('Content-Encoding: gzip');
+		header('Vary: accept-encoding');
+		header('Content-Length: ' . strlen($code));
+	}
 
-if ($isgzip) {
-	header('Content-Encoding: gzip');
-	header('Vary: accept-encoding');
-	header('Content-Length: ' . strlen($code));
+	if ($isjs) header('Content-Type: text/javascript; charset=utf-8');
+	else header('Content-Type: text/css; charset=utf-8');
 }
-
-if ($isjs) header('Content-Type: text/javascript; charset=utf-8');
-else header('Content-Type: text/css; charset=utf-8');
-
-echo $code;
+return Ans::txt($code);
