@@ -81,4 +81,4 @@ if (!Load::isphp()) {
 	if ($isjs) header('Content-Type: text/javascript; charset=utf-8');
 	else header('Content-Type: text/css; charset=utf-8');
 }
-return Ans::txt($code);
+return Ans::css($code);
