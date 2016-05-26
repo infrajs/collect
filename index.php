@@ -39,13 +39,8 @@ if ($debug || $re) {
 	$key = 'Infrajs::Collect::' . $isjs . false;//Кэш без zip
 	Mem::delete($key);
 	
-	if (!Load::isphp()) {
-		if ($isjs) header('Content-Type: text/javascript; charset=utf-8');
-		else header('Content-Type: text/css; charset=utf-8');
-	}
-	
-	
-	return Ans::txt($code);
+	if ($isjs) return Ans::js($code);
+	return Ans::css($code);
 }
 
 $p = explode(',', str_replace(' ', '', $_SERVER['HTTP_ACCEPT_ENCODING']));
@@ -77,8 +72,6 @@ if (!Load::isphp()) {
 		header('Vary: accept-encoding');
 		header('Content-Length: ' . strlen($code));
 	}
-
-	if ($isjs) header('Content-Type: text/javascript; charset=utf-8');
-	else header('Content-Type: text/css; charset=utf-8');
 }
+if ($isjs) return Ans::js($code);
 return Ans::css($code);
