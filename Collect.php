@@ -58,12 +58,13 @@ class Collect {
 
 		Each::exec($c['js'], function ($path) use ($name,&$js) {
 			$src = '-'.$name.'/'.$path;
-			if(!Path::theme($src)) {
-				echo '<pre>';
-				throw new \Exception('Не найден файл '.$src);
-			}
 			$js.= "\n\n".'//load js '.$src."\r\n";
-			$js.= Load::loadTEXT($src).';';
+			if (Path::theme($src)) {
+				$js.= Load::loadTEXT($src).';';
+			} else {
+				$js.= 'console.error("Не найден файл '.$src.'");';
+			}
+			
 		});
 	}
 	public static $cssed = array();
