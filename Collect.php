@@ -55,9 +55,16 @@ class Collect {
 		}
 		if (Collect::$jsed[$name]) return;
 		Collect::$jsed[$name] = true;
+		
+		$root = (!empty($c['-collect']) && $c['-collect'] == 'root');
+		
+		Each::exec($c['js'], function ($path) use ($name, &$js,  $root) {
+			if ($root) {
+				$src = $path;
+			} else {
+				$src = '-'.$name.'/'.$path;
+			}
 
-		Each::exec($c['js'], function ($path) use ($name,&$js) {
-			$src = '-'.$name.'/'.$path;
 			$js.= "\n\n".'//load js '.$src."\r\n";
 			if (Path::theme($src)) {
 				$js.= Load::loadTEXT($src).';';
@@ -71,6 +78,7 @@ class Collect {
 	public static function loadCSS(&$js, $name)
 	{
 		$c = Config::get($name);
+			
 		if (empty($c['css'])) return;
 		if (!empty($c['off'])) return;
 		if (!empty($c['dependencies'])) {
@@ -80,11 +88,17 @@ class Collect {
 		}
 		if (Collect::$cssed[$name]) return;
 		Collect::$cssed[$name] = true;
+		
+		$root = (!empty($c['-collect']) && $c['-collect'] == 'root');
 
-		Each::exec($c['css'], function ($path) use ($name,&$js) {
-			$src = '-'.$name.'/'.$path;
+		Each::exec($c['css'], function ($path) use ($name, &$js, $root) {
+			if ($root) {
+				$src = $path;
+			} else {
+				$src = '-'.$name.'/'.$path;
+			}
+
 			$js.= "\n\n".'/*load css '.$src."*/\r\n";
-
 			if(!Path::theme($src)) {
 				echo '<pre>';
 				throw new \Exception('Не найден файл '.$src);

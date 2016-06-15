@@ -83,6 +83,14 @@
 ```html
 	<script async defer src="/vendor/infrajs/collect/?js&name=event,tester"></script>
 ```
+## Путь от корня
+Ключ в конфиге расширения
+```json
+{
+	"-collect":"root"
+}
+``` 
+будет означать что все пути js и css указаны от корня
 
 ## Требования
 - composer
