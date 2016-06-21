@@ -4,6 +4,17 @@
 Используется [кэш браузерный](https://github.com/infrajs/nostore) и [кэш серверый](https://github.com/infrajs/mem), [gzip, минификация](https://github.com/matthiasmullie/minify).
 
 ## Использование
+
+В html Добавляем
+
+```html
+<head>
+	<script src="/vendor/infrajs/collect/?js"></script>
+	<link href="/vendor/infrajs/collect/?css" type="text/css" rel="stylesheet" />
+</head>
+```
+
+## Добавление своих css и js файлов
 В проекте есть файлы css и js:
 
 - bower_components/jquery/dist/jquery.min.js
@@ -12,8 +23,7 @@
 - css/style.css
 - css/animate.css
 
-
-В корне проекта создаётся файл **.infra.json**
+Добавить эти файлы можно с помощью корневого кофнига. В корне проекта создаётся файл **.infra.json** со следующим содержанием
 
 ```json
 {
@@ -34,15 +44,6 @@
 
 Все пути в css-файлах должны быть указаны от корня проекта "/" или быть абсолютными. 
 Стили **bootstrap** и **flexslider** содержат пути относительно своего расположения их придётся загружать отдельно или соответствующее инструкции работать не будут.
-
-В html Добавляем
-
-```html
-<head>
-	<script src="/vendor/infrajs/collect/?js"></script>
-	<link href="/vendor/infrajs/collect/?css" type="text/css" rel="stylesheet" />
-</head>
-```
 
 ## Порядок выполнения - dependencies
 Порядок в котором загружается код, определяется порядком упоминания файлов в **.infra.json**. 
