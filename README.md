@@ -1,7 +1,15 @@
 # Сборщик css и javascript в один файл
-Обрабатывается свойство **js**, **css** в конфигурационном файле [.infra.json](https://github.com/infrajs/config), который можно создать в корне проекта или в папках зависимостей.
-После установки сборка javascript и css доступна по адресу ```/vendor/infrajs/collect/js.php``` и ```/vendor/infrajs/collect/css.php```.
-Используется [кэш браузерный](https://github.com/infrajs/nostore) и [кэш серверый](https://github.com/infrajs/mem), [gzip, минификация](https://github.com/matthiasmullie/minify).
+
+Расширение собирает и объединяет javascript-файлы в один по адресу ```/vendor/infrajs/collect/?js``` 
+Расширение собирает и объединяет css-файлы в один по адресу ```/vendor/infrajs/collect/?css``` 
+
+Если в проекте настроен .htaccess на работу с коротким путями [infrajs/router](https://github.com/infrajs/router) будут работать короткие адреса
+
+```/-collect/?js``` 
+
+```/-collect/?css```
+
+их и рекомендуется использовать.
 
 ## Использование
 
@@ -13,6 +21,10 @@
 	<link href="/vendor/infrajs/collect/?css" type="text/css" rel="stylesheet" />
 </head>
 ```
+## Описание 
+Обрабатывается свойство **js**, **css** в конфигурационном файле [.infra.json](https://github.com/infrajs/config), который можно создать в корне проекта или в папках зависимостей.
+После установки сборка javascript и css доступна по адресу ```/vendor/infrajs/collect/?js``` и ```/vendor/infrajs/collect/?css```.
+Используется [кэш браузерный](https://github.com/infrajs/nostore) и [кэш серверый](https://github.com/infrajs/mem), [gzip, минификация](https://github.com/matthiasmullie/minify).
 
 ## Добавление своих css и js файлов
 В проекте есть файлы css и js:
