@@ -1,7 +1,7 @@
 # Сборщик css и javascript в один файл
 
-Расширение собирает и объединяет javascript-файлы в один по адресу ```/vendor/infrajs/collect/?js``` 
-Расширение собирает и объединяет css-файлы в один по адресу ```/vendor/infrajs/collect/?css``` 
+- Расширение собирает и объединяет javascript-файлы в один по адресу ```/vendor/infrajs/collect/?js```
+- Расширение собирает и объединяет css-файлы в один по адресу ```/vendor/infrajs/collect/?css``` 
 
 Если в проекте настроены короткие пути [infrajs/router](https://github.com/infrajs/router) с .htaccess. Рекомендуется исопльзовать следующие пути:
 
