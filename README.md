@@ -3,13 +3,10 @@
 Расширение собирает и объединяет javascript-файлы в один по адресу ```/vendor/infrajs/collect/?js``` 
 Расширение собирает и объединяет css-файлы в один по адресу ```/vendor/infrajs/collect/?css``` 
 
-Если в проекте настроен .htaccess на работу с коротким путями [infrajs/router](https://github.com/infrajs/router) будут работать короткие адреса
+Если в проекте настроены короткие пути [infrajs/router](https://github.com/infrajs/router) с .htaccess. Рекомендуется исопльзовать следующие пути:
 
-```/-collect/?js``` 
-
-```/-collect/?css```
-
-их и рекомендуется использовать.
+- **/-collect/?js** 
+- **/-collect/?css**
 
 ## Использование
 
