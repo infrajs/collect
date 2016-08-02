@@ -36,17 +36,9 @@
 
 ```json
 {
-	"bower_components/jquery":{
-		"js":"dist/jquery.min.js"
-	},
-	"bootstrap":{
-		"js":"js/bootstrap.min.js"
-	},
-	"bower_components/flexslider":{
-		"js":"jquery.flexslider-min.js"
-	},
-	"css":{
-		"css":["animate.css","style.css"]
+	"index":{
+		"js":["bower_components/jquery/dist/jquery.min.js","bootstrap/js/bootstrap.min.js","bower_components/flexslider/jquery.flexslider-min.js"],
+		"css":["css/animate.css","css/style.css"]
 	}
 }
 ```
