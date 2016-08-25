@@ -1,3 +1,6 @@
 {
-	"tester":"test.php"
+	"tester":"test.php",
+	"clutch":{
+		"pixeden-stroke-7-icon":"pixeden-stroke-7-icon"
+	}
 }

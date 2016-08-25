@@ -103,7 +103,7 @@ class Collect {
 				echo '<pre>';
 				throw new \Exception('Не найден файл '.$src);
 			}
-			$js.= Load::loadTEXT($src);
+			$js.= Load::loadTEXT('-csspath/?src='.$src);
 		});
 	}
 }
