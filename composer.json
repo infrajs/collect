@@ -17,6 +17,6 @@
 		"infrajs/config":"~1",
 		"infrajs/mem":"~1",
 		"infrajs/access":"~1",
-		"akyatkin/csspath":"~1"
+		"akiyatkin/csspath":"~1"
 	}
 }
