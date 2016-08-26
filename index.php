@@ -7,6 +7,9 @@ use infrajs\ans\Ans;
 use infrajs\nostore\Nostore;
 use MatthiasMullie\Minify;
 use infrajs\router\Router;
+use infrajs\config\Config;
+use infrajs\path\Path;
+use infrajs\config\search\Search;
 
 if (!is_file('vendor/autoload.php')) {
 	chdir('../../../');
@@ -14,7 +17,9 @@ if (!is_file('vendor/autoload.php')) {
 	Router::init();
 }
 
+
 Nostore::pubStat(); //Кэшируется, если public разрешён, как статика, надолго
+
 
 if(isset($_GET['js'])) $isjs = 'js';
 else if(isset($_GET['css'])) $isjs = '';
