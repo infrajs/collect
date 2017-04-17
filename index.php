@@ -11,22 +11,14 @@ use infrajs\config\Config;
 use infrajs\path\Path;
 use infrajs\config\search\Search;
 
-if (!is_file('vendor/autoload.php')) {
-	chdir('../../../');
-	require_once('vendor/autoload.php');
-	Router::init();
-}
-
-
 Nostore::pubStat(); //Кэшируется, если public разрешён, как статика, надолго
-
 
 if(isset($_GET['js'])) $isjs = 'js';
 else if(isset($_GET['css'])) $isjs = '';
 else die('Необходимо добавить параметр css или js');
 
 if (!Load::isphp()) {
-	header('Infrajs-Cache: true');
+	header('Collect-Cache: true');
 }
 
 $re = isset($_GET['re']); //Modified re нужно обновлять с ctrl+F5
@@ -34,14 +26,14 @@ $debug = Access::debug();
 $name = Ans::GET('name','string','');
 
 if ($debug || $re) {
-	if (!Load::isphp()) header('Infrajs-Cache: false');
+	if (!Load::isphp()) header('Collect-Cache: false');
 	
 	if ($isjs) $code = Collect::js($name);
 	else $code = Collect::css($name);
 
-	$key = 'Infrajs::Collect::' . $isjs . true;//Кэш с zip
+	$key = 'Collect::Collect::' . $isjs . true;//Кэш с zip
 	Mem::delete($key);
-	$key = 'Infrajs::Collect::' . $isjs . false;//Кэш без zip
+	$key = 'Collect::Collect::' . $isjs . false;//Кэш без zip
 	Mem::delete($key);
 	
 	if ($isjs) return Ans::js($code);
@@ -51,26 +43,37 @@ if ($debug || $re) {
 $p = explode(',', str_replace(' ', '', $_SERVER['HTTP_ACCEPT_ENCODING']));
 $isgzip = !Load::isphp()&&in_array('gzip', $p);
 
-$key = 'Infrajs::Collect::' . $isjs . $isgzip; //Два кэша зазипованый и нет. Не все браузеры понимают зазипованую версию.
+$key = 'Collect::Collect::' . $isjs . $isgzip; //Два кэша зазипованый и нет. Не все браузеры понимают зазипованую версию.
 
-$code = Mem::get($key);
+$data = Mem::get($key);
+
+if (!is_array($data)) $data['code'] = '';
+
+$code = $data['code'];
 
 if (!$code) {
-	if (!Load::isphp()) header('Infrajs-Cache: false');
+
+	if (!Load::isphp()) header('Collect-Cache: false');
+
 
 	if ($isjs) $code = Collect::js($name);
 	else $code = Collect::css($name);
 	
 	if ($isjs) $min = new Minify\JS($code);
 	else $min = new Minify\CSS($code);
-	
+
+
 	if ($isgzip) {	
 		$code = $min->gzip();
 	} else {
 		$code = $min->minify();
 	}
-	Mem::set($key, $code);
+
+	Mem::set($key, array('code' => $code));
 }
+
+
+
 if (!Load::isphp()) {
 	if ($isgzip) {
 		header('Content-Encoding: gzip');
