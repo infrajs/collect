@@ -11,7 +11,7 @@ use infrajs\config\Config;
 use infrajs\path\Path;
 use infrajs\config\search\Search;
 
-//Nostore::pubStat(); //Кэшируется, если public разрешён, как статика, надолго
+if (Ans::GET('time')) Nostore::pubStat(); //Кэшируется, если public разрешён, как статика, надолго. Если указана версия
 
 if(isset($_GET['js'])) $isjs = 'js';
 else if(isset($_GET['css'])) $isjs = '';
