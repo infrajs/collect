@@ -18,6 +18,14 @@
 	<link href="/vendor/infrajs/collect/?css" type="text/css" rel="stylesheet" />
 </head>
 ```
+Если передать ещё и метку времени (или просто уникальная строка версии), то включится public кэширование. Без метки запро к серверу всегда с проверкой If-Not-Modified.
+```html
+<script src="/vendor/infrajs/collect/?js&time=2342342"></script>
+```
+Если есть шаблонизатор
+```html
+<script src="/vendor/infrajs/collect/?js&time={Access.adminTime()}"></script>
+```
 
 ## Описание 
 Обрабатывается свойство **js**, **css** в конфигурационном файле [.infra.json](https://github.com/infrajs/config), который можно создать в корне проекта или в папках зависимостей.
