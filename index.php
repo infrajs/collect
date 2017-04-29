@@ -11,7 +11,8 @@ use infrajs\config\Config;
 use infrajs\path\Path;
 use infrajs\config\search\Search;
 
-if (Ans::GET('time')) Nostore::pubStat(); //Кэшируется, если public разрешён, как статика, надолго. Если указана версия
+$time = Ans::GET('time','string', ''); 
+if ($time) Nostore::pubStat(); //Кэшируется, если public разрешён, как статика, надолго. Если указана версия
 
 if(isset($_GET['js'])) $isjs = 'js';
 else if(isset($_GET['css'])) $isjs = '';
@@ -31,9 +32,9 @@ if ($debug || $re) {
 	if ($isjs) $code = Collect::js($name);
 	else $code = Collect::css($name);
 
-	$key = 'Collect::Collect::' . $isjs . true;//Кэш с zip
+	$key = 'Collect::Collect::' . $isjs . true . $time;//Кэш с zip
 	Mem::delete($key);
-	$key = 'Collect::Collect::' . $isjs . false;//Кэш без zip
+	$key = 'Collect::Collect::' . $isjs . false . $time;//Кэш без zip
 	Mem::delete($key);
 	
 	if ($isjs) return Ans::js($code);
@@ -43,7 +44,7 @@ if ($debug || $re) {
 $p = explode(',', str_replace(' ', '', $_SERVER['HTTP_ACCEPT_ENCODING']));
 $isgzip = !Load::isphp()&&in_array('gzip', $p);
 
-$key = 'Collect::Collect::' . $isjs . $isgzip; //Два кэша зазипованый и нет. Не все браузеры понимают зазипованую версию.
+$key = 'Collect::Collect::' . $isjs . $isgzip . $time; //Два кэша зазипованый и нет. Не все браузеры понимают зазипованую версию.
 
 $data = Mem::get($key);
 
