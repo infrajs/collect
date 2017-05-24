@@ -41,8 +41,12 @@ if ($debug || $re) {
 	return Ans::css($code);
 }
 
-$p = explode(',', str_replace(' ', '', $_SERVER['HTTP_ACCEPT_ENCODING']));
-$isgzip = !Load::isphp()&&in_array('gzip', $p);
+if (isset($_SERVER['HTTP_ACCEPT_ENCODING'])) {
+	$p = explode(',', str_replace(' ', '', $_SERVER['HTTP_ACCEPT_ENCODING']));
+	$isgzip = !Load::isphp()&&in_array('gzip', $p);
+} else {
+	$isgzip = false;
+}
 
 $key = 'Collect::Collect::' . $isjs . $isgzip . $time; //Два кэша зазипованый и нет. Не все браузеры понимают зазипованую версию.
 
