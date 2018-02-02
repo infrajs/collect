@@ -2,7 +2,6 @@
 	"name": "infrajs/collect",
 	"homepage":"https://github.com/infrajs/collect",
 	"description":"Collect and minifying js files in one on fly",
-	"license": "GPL3",
 	"autoload": {
 		"psr-4": { "infrajs\\collect\\": "" }
 	},
