@@ -48,7 +48,7 @@ class Collect {
 	}
 	public static function loadJS(&$js, $name)
 	{
-		if (Once::omit(__FILE__, array($name))) return;
+		if (Once::omit(array($name))) return;
 
 		$c = Config::get($name);
 		
