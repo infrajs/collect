@@ -8,6 +8,7 @@ use infrajs\nostore\Nostore;
 use MatthiasMullie\Minify;
 use infrajs\router\Router;
 use infrajs\config\Config;
+use akiyatkin\fs\FS;
 use infrajs\path\Path;
 use infrajs\config\search\Search;
 
@@ -41,12 +42,11 @@ if ($debug || $re) {
 	return Ans::css($code);
 }
 
-if (isset($_SERVER['HTTP_ACCEPT_ENCODING'])) {
+$isgzip = false;
+/*if (isset($_SERVER['HTTP_ACCEPT_ENCODING'])) {
 	$p = explode(',', str_replace(' ', '', $_SERVER['HTTP_ACCEPT_ENCODING']));
 	$isgzip = !Load::isphp()&&in_array('gzip', $p);
-} else {
-	$isgzip = false;
-}
+}*/
 
 $key = 'Collect::Collect::' . $isjs . $isgzip . $time; //Два кэша зазипованый и нет. Не все браузеры понимают зазипованую версию.
 
@@ -73,11 +73,8 @@ if (!$code) {
 	} else {
 		$code = $min->minify();
 	}
-
 	Mem::set($key, array('code' => $code));
 }
-
-
 
 if (!Load::isphp()) {
 	if ($isgzip) {

@@ -9,7 +9,7 @@ use infrajs\path\Path;
 class Collect {
 	public static function js($name = false)
 	{
-		return Once::exec(__FILE__.'js', function ($name) {
+		return Once::func( function ($name) {
 			$js = '';
 			if ($name) {
 				$ar = explode(',', $name);
@@ -29,7 +29,7 @@ class Collect {
 	}
 	public static function css($name = false)
 	{
-		return Once::exec(__FILE__.'css', function ($name) {
+		return Once::func( function ($name) {
 			$js = '';
 			if ($name) {
 				$ar = explode(',', $name);
@@ -48,47 +48,46 @@ class Collect {
 	}
 	public static function loadJS(&$js, $name)
 	{
-		if (Once::omit(array($name))) return;
+		return Once::func( function ($name) use (&$js) {
+			$c = Config::get($name);
+			if (!empty($c['off'])) return;
+			if (!empty($c['dependencies'])) {
+				Each::exec($c['dependencies'], function &($name) use(&$js){
+					Collect::loadJS($js, $name);
+					$r = null; return $r;
+				});
+			}
+			
+			$root = (!empty($c['-collect']) && $c['-collect'] == 'root');
+			
+			if (isset($c['json'])) {
+				Each::exec($c['json'], function &($src) use ($name, &$js,  $root) {
+					$r = null;
+					if (!$root) $src = '-'.$name.'/'.$src;
+					$js.= "\n\n".'//load json '.$src."\r\n";
+					if (Path::theme($src)) {
+						$js.= 'infra.store("loadJSON")["'.$src.'"] = { value: '.Load::loadTEXT($src).', status:true};';
+					} else {
+						$js.= 'console.error("Не найден файл '.$src.'");';
+					}
+					return $r;
+				});
+			}
+			if (isset($c['js'])) {
+				Each::exec($c['js'], function &($src) use ($name, &$js,  $root) {
+					$r = null;
+					if (!$root) $src = '-'.$name.'/'.$src;
 
-		$c = Config::get($name);
-		
-		if (!empty($c['off'])) return;
-		if (!empty($c['dependencies'])) {
-			Each::exec($c['dependencies'], function &($name) use(&$js){
-				Collect::loadJS($js, $name);
-				$r = null; return $r;
-			});
-		}
-		
-		$root = (!empty($c['-collect']) && $c['-collect'] == 'root');
-		
-		if (isset($c['json'])) {
-			Each::exec($c['json'], function &($src) use ($name, &$js,  $root) {
-				$r = null;
-				if (!$root) $src = '-'.$name.'/'.$src;
-				$js.= "\n\n".'//load json '.$src."\r\n";
-				if (Path::theme($src)) {
-					$js.= 'infra.store("loadJSON")["'.$src.'"] = { value: '.Load::loadTEXT($src).', status:true};';
-				} else {
-					$js.= 'console.error("Не найден файл '.$src.'");';
-				}
-				return $r;
-			});
-		}
-		if (isset($c['js'])) {
-			Each::exec($c['js'], function &($src) use ($name, &$js,  $root) {
-				$r = null;
-				if (!$root) $src = '-'.$name.'/'.$src;
-
-				$js.= "\n\n".'//load js '.$src."\r\n";
-				if (Path::theme($src)) {
-					$js.= Load::loadTEXT($src).';';
-				} else {
-					$js.= 'console.error("Не найден файл '.$src.'");';
-				}
-				return $r;
-			});
-		}
+					$js.= "\n\n".'//load js '.$src."\r\n";
+					if (Path::theme($src)) {
+						$js.= Load::loadTEXT($src).';';
+					} else {
+						$js.= 'console.error("Не найден файл '.$src.'");';
+					}
+					return $r;
+				});
+			}
+		}, array($name));
 	}
 	public static $cssed = array();
 	public static function loadCSS(&$js, $name)
