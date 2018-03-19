@@ -24,7 +24,7 @@ if (!Load::isphp()) {
 }
 
 $re = isset($_GET['re']); //Modified re нужно обновлять с ctrl+F5
-$debug = Access::debug();
+$debug = Access::isDebug();
 $name = Ans::GET('name','string','');
 
 if ($debug || $re) {
