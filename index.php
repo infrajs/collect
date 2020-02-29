@@ -64,7 +64,7 @@ if (!$code) {
 	if ($isjs) $code = Collect::js($name);
 	else $code = Collect::css($name);
 	
-	if ($isjs) $min = new Minify\JS($code);
+	/*if ($isjs) $min = new Minify\JS($code);
 	else $min = new Minify\CSS($code);
 
 
@@ -72,16 +72,16 @@ if (!$code) {
 		$code = $min->gzip();
 	} else {
 		$code = $min->minify();
-	}
+	}*/
 	Mem::set($key, array('code' => $code));
 }
 
-if (!Load::isphp()) {
+/*if (!Load::isphp()) {
 	if ($isgzip) {
 		header('Content-Encoding: gzip');
 		header('Vary: accept-encoding');
 		header('Content-Length: ' . strlen($code));
 	}
-}
+}*/
 if ($isjs) return Ans::js($code);
 return Ans::css($code);
