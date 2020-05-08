@@ -36,7 +36,8 @@ $code = Rest::get(function () {
 	$i = 0;
 	foreach ($srcs as $src) {
 		$i++;
-		$html .= "import t".$i." from '/".$src."'\n";
+		//$html .= "import t".$i." from '/".$src."'\n";
+		$html .= "import { } from '/".$src."'\n";
 	}
 	return $html;
 }, 'css', function () {
