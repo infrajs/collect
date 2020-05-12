@@ -27,6 +27,7 @@ $code = Rest::get(function () {
 		if (!is_array($jss)) $jss = [$jss];
 		foreach ($jss as $js) {
 			$src = Path::theme('-'.$name.'/'.$js);
+			if (!$src) continue;
 			if (Path::getExt($src) == 'php') $src = '-'.$name.'/'.$js;
 			$srcs[] = $src;
 		}
