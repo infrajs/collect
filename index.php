@@ -6,7 +6,6 @@ use infrajs\access\Access;
 use infrajs\load\Load;
 use infrajs\mem\Mem;
 use infrajs\ans\Ans;
-use infrajs\nostore\Nostore;
 use MatthiasMullie\Minify;
 use infrajs\router\Router;
 use infrajs\config\Config;
@@ -14,8 +13,6 @@ use akiyatkin\fs\FS;
 use infrajs\rest\Rest;
 use infrajs\path\Path;
 use infrajs\config\search\Search;
-
-Nostore::pub();
 
 return Rest::get(function () {
 	echo '/js или /css';
