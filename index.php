@@ -29,6 +29,7 @@ return Rest::get(function () {
 			$srcs[] = $src;
 		}
 	});
+
 	header("Content-Type: application/javascript");
 	$html = '';
 	$i = 0;
