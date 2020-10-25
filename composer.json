@@ -6,15 +6,9 @@
 		"psr-4": { "infrajs\\collect\\": "" }
 	},
 	"require":{
-		"matthiasmullie/minify":"~1",
-		"infrajs/router":"~1",
+		"akiyatkin/meta":"~1",
 		"infrajs/path":"~1",
-		"infrajs/load":"~1",
-		"infrajs/each":"~1",
-		"infrajs/ans":"~1",
 		"infrajs/config":"~1",
-		"infrajs/mem":"~1",
-		"infrajs/access":"~1",
-		"akiyatkin/csspath":"~1"
+		"infrajs/load":"~1"
 	}
 }

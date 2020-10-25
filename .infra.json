@@ -1,3 +1,7 @@
 {
-	"tester":"test.php"
+	"imports":true,
+	"lang":{
+		"def":"ru",
+		"list":["ru","en"]
+	}
 }
