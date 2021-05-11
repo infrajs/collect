@@ -6,10 +6,6 @@ use infrajs\load\Load;
 
 $meta = new Meta();
 
-$meta->addAction('', function () {
- 	return $this->err('jscss');
-});
-
 $meta->addVariable('srcs', function () {
 	$r = explode('.', $this->action);
 	$type = $r[sizeof($r) - 1];
