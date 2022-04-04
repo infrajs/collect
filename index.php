@@ -3,6 +3,7 @@ use akiyatkin\meta\Meta;
 use infrajs\path\Path;
 use infrajs\config\Config;
 use infrajs\load\Load;
+use infrajs\access\Access;
 
 $meta = new Meta();
 
@@ -39,6 +40,12 @@ $meta->addAction('all.css', function () {
 	$html = '';
 	foreach ($srcs as $src) {
 		if (Config::get('collect')['imports']) {
+			$t = Access::updateTime();
+			if (sizeof(explode('?',$src)) > 1) {
+				$src = $src.'&t='.$t;
+			} else {
+				$src = $src.'?t='.$t;
+			}
 			$html .= "@import url('/$src');\r\n";
 		} else {
 			$html .= "\n\n".'/*load css '.$src."*/\r\n";
